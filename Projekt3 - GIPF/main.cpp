@@ -20,15 +20,51 @@ struct ORGINAL
 class Board
 {
 
-
 public:
 
-	int sideSize = 5; 
+
+	int sideSize = 3; 
 	int totalRowsCount = (sideSize - 1) * 2 + 1;
 	vector<vector<char>> board;
 	map<string, point> namedBoard;
-
 	
+	struct Field
+	{
+		point coords;
+		char& value;
+		Field(point coords, char& value) : coords(coords), value(value) {};
+		void print()
+		{
+			coords.print();
+			cout << " " << value;
+		}
+	};
+
+	Field get(string fieldName)
+	{
+		if (namedBoard.find(fieldName) != namedBoard.end())
+		{
+			point coords = namedBoard[fieldName];
+			Field field(coords, board[coords.y][coords.x]);
+			return field;
+		}
+		throw "Wrong field name!";
+	}
+	Field operator[](string field)
+	{
+		return get(field);
+	}
+
+	enum Move
+	{
+		UPPER_LEFT,		// (0, -1)
+		UPPER_RIGHT,	// (1, -1)
+		RIGHT,			// (1, 0)
+		BOTTOM_RIGHT,	// (0, 1)
+		BOTTOM_LEFT,	// (1, 1)
+		LEFT			// (-1, 0)
+	};
+
 	struct Moves
 	{
 		point UPPER_LEFT	= { 0, -1 };		
@@ -39,10 +75,48 @@ public:
 		point LEFT			= { -1, 0 };				
 	} MOVES;
 
+	Field getNeighbour(string fieldName, Move move)
+	{
+		return getNeighbour(this->get(fieldName), move);
+	}
+
+	Field getNeighbour(Field field, Move move)
+	{
+		point offset;
+
+		switch (move)
+		{
+		case Board::UPPER_LEFT:
+			offset = MOVES.UPPER_LEFT;
+			break;
+		case Board::UPPER_RIGHT:
+			offset = MOVES.UPPER_RIGHT;
+			break;
+		case Board::RIGHT:
+			offset = MOVES.RIGHT;
+			break;
+		case Board::BOTTOM_RIGHT:
+			offset = MOVES.BOTTOM_RIGHT;
+			break;
+		case Board::BOTTOM_LEFT:
+			offset = MOVES.BOTTOM_LEFT;
+			break;
+		case Board::LEFT:
+			offset = MOVES.LEFT;
+			break;
+		default:
+			offset = { -1,-1 };
+			break;
+		}
+
+		point neighbourCoords = field.coords + offset;
+		Field neighbour(neighbourCoords, board[neighbourCoords.y][neighbourCoords.x]);
+		return neighbour;
+	}
+
 	Board() : board(totalRowsCount, vector<char>(totalRowsCount)) {};
 	// sideSize >= 2
 	Board(int sideSize);
-	char& get();
 
 	void populateNamedBoard()
 	{
@@ -65,7 +139,6 @@ public:
 				fieldCoords += {1, -1};
 				fieldNumber++;
 			}
-			
 			// fixes rows expanding in the middle
 			if (i < sideSize - 1)
 				rowExpansion++;
@@ -78,7 +151,7 @@ public:
 		for (pair<string, point> p : namedBoard)
 		{
 			point field = p.second;
-			board[field.x][field.y] = 'W';
+			board[field.x][field.y] = '*';
 		}
 
 	}
@@ -102,7 +175,6 @@ public:
 		}
 	}
 
-
 };
 
 class Game
@@ -113,7 +185,6 @@ class Game
 	int triggerCollectionNumber;
 	int whitePieces;
 	int blackPiecies;
-
 
 	// sideSize >= 2
 	// 2 < triggerCollectionNumber < 2*sideSize - 1
@@ -127,9 +198,15 @@ class Game
 
 int main()
 {
-	Board b;
-	b.populateNamedBoard();
-	point a = b.namedBoard["c3"];
-	//(a + b.MOVES.BOTTOM_RIGHT).print();
-	b.printBoard();
+	Board board;
+	board.populateNamedBoard();
+
+	board["c3"].value = 'X';
+	board["c4"].value = 'Z';
+	board["b2"].value = '2';
+	board["b3"].value = '3';
+	board["b4"].value = '4';
+	board.getNeighbour("c3", Board::Move::UPPER_RIGHT).print();
+	cout << endl;
+	board.printBoard();
 }
