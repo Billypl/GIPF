@@ -20,12 +20,14 @@ struct ORGINAL
 class Board
 {
 
-	vector<vector<char>> board;
 
 public:
+
+	int sideSize = 5; 
+	int totalRowsCount = (sideSize - 1) * 2 + 1;
+	vector<vector<char>> board;
 	map<string, point> namedBoard;
 
-	int sideSize = 3; 
 	
 	struct Moves
 	{
@@ -33,18 +35,17 @@ public:
 		point UPPER_RIGHT	= { 1, -1 };		
 		point RIGHT			= { 1, 0 };				
 		point BOTTOM_RIGHT	= { 0, 1 };		
-		point BOTTOM_LEFT	= { 1, 1 };		
+		point BOTTOM_LEFT	= { -1, 1 };		
 		point LEFT			= { -1, 0 };				
 	} MOVES;
 
-	Board() {};
+	Board() : board(totalRowsCount, vector<char>(totalRowsCount)) {};
 	// sideSize >= 2
 	Board(int sideSize);
 	char& get();
 
 	void populateNamedBoard()
 	{
-		int totalRowsCount = (sideSize - 1) * 2 + 1;
 		char fieldLetter = 'b';
 		int rowExpansion = 0;
 		point fieldCoords;
@@ -60,8 +61,6 @@ public:
 			for (int j = 0; j < sideSize + rowExpansion; j++)
 			{
 				string fieldName = fieldLetter + to_string(fieldNumber);
-				//cout << fieldName << " ";
-				//fieldCoords.print(); cout << " ";
 				namedBoard[fieldName] = fieldCoords;
 				fieldCoords += {1, -1};
 				fieldNumber++;
@@ -73,8 +72,33 @@ public:
 			else
 				rowExpansion--;
 
-			//cout << endl;
 			fieldLetter++;
+		}
+
+		for (pair<string, point> p : namedBoard)
+		{
+			point field = p.second;
+			board[field.x][field.y] = 'W';
+		}
+
+	}
+
+	void printBoard()
+	{
+		for (int i = 0; i < totalRowsCount; i++)
+		{
+			if (i > sideSize - 1)
+			{
+				for (int k = 0; k < i - sideSize + 1; k++)
+				{
+					cout << " ";
+				}
+			}
+			for (int j = 0; j < totalRowsCount; j++)
+			{
+				cout << board[i][j] << " ";
+			}
+			cout << endl;
 		}
 	}
 
@@ -105,5 +129,7 @@ int main()
 {
 	Board b;
 	b.populateNamedBoard();
-	b.namedBoard["d5"].print();
+	point a = b.namedBoard["c3"];
+	//(a + b.MOVES.BOTTOM_RIGHT).print();
+	b.printBoard();
 }
