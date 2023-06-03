@@ -1,0 +1,88 @@
+LOAD_GAME_BOARD
+2 3 5 5
+4 2 B
+ _ W
+_ B B
+ B _
+
+GEN_ALL_POS_MOV_NUM
+
+GEN_ALL_POS_MOV
+
+LOAD_GAME_BOARD
+2 3 5 5
+3 5 W
+ _ _
+_ W _
+ _ W
+
+IS_GAME_OVER
+
+GEN_ALL_POS_MOV_NUM
+
+GEN_ALL_POS_MOV
+
+LOAD_GAME_BOARD
+2 3 5 5
+2 1 W
+ B B
+W W B
+ B W
+
+IS_GAME_OVER
+
+LOAD_GAME_BOARD
+2 3 5 5
+1 2 B
+ B W
+W W B
+ B W
+
+IS_GAME_OVER
+
+LOAD_GAME_BOARD
+2 3 5 5
+4 0 B
+ B B
+B W B
+ B _
+
+IS_GAME_OVER
+
+LOAD_GAME_BOARD
+2 3 5 5
+4 0 W
+ B B
+B W B
+ B _
+
+GEN_ALL_POS_MOV_NUM
+GEN_ALL_POS_MOV
+
+LOAD_GAME_BOARD
+4 4 15 15
+4 6 W
+   _ W _ _
+  _ B B _ _
+ _ W W W _ _
+W B B B W _ _
+ W W W B _ _
+  B B W _ _
+   W B _ _
+
+GEN_ALL_POS_MOV_NUM
+GEN_ALL_POS_MOV
+
+LOAD_GAME_BOARD
+4 4 15 15
+6 3 W
+   _ _ _ W
+  _ _ _ W _
+ _ _ _ W _ _
+W W W _ _ _ _
+ _ _ _ W _ _
+  _ _ _ W _
+   _ _ _ W
+
+GEN_ALL_POS_MOV_NUM
+GEN_ALL_POS_MOV

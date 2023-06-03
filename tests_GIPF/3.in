@@ -1,0 +1,153 @@
+LOAD_GAME_BOARD
+4 4 15 15
+9 12 W
+   _ _ _ B
+  _ W _ _ _
+ _ _ W _ _ _
+B _ _ W _ _ W
+ _ _ _ W _ _
+  _ _ _ _ _
+   W _ _ B
+
+LOAD_GAME_BOARD
+4 4 15 15
+9 12 W
+   _ _ _ B
+  _ _ W _ _
+ _ _ _ W _ _
+B _ _ _ W _ W
+ _ _ _ _ W _
+  _ _ _ _ _
+   W _ _ B
+
+LOAD_GAME_BOARD
+4 4 15 15
+9 12 W
+   _ _ _ B
+  _ _ _ W _
+ _ _ _ _ W _
+B _ _ _ _ W W
+ _ _ _ _ _ W
+  _ _ _ _ _
+   W _ _ B
+
+LOAD_GAME_BOARD
+4 4 15 15
+9 12 W
+   W _ _ B
+  _ W _ _ _
+ _ _ W _ _ _
+B _ _ W _ _ W
+ _ _ _ _ _ _
+  _ _ _ _ _
+   W _ _ B
+
+LOAD_GAME_BOARD
+4 4 15 15
+6 13 W
+   W _ _ B
+  _ W _ _ _
+ _ _ W _ _ _
+B _ _ W _ _ W
+ _ _ _ W _ _
+  _ _ _ W _
+   W _ _ W
+
+LOAD_GAME_BOARD
+4 4 15 15
+4 13 W
+   W _ _ B
+  _ W _ _ _
+ _ _ W _ _ _
+B _ _ W W W W
+ _ _ _ W _ _
+  _ _ _ W _
+   W _ _ W
+
+LOAD_GAME_BOARD
+4 4 15 15
+9 8 W
+   W B _ B
+  _ W B _ _
+ _ _ W B _ _
+B _ _ W B _ W
+ _ _ _ _ _ _
+  _ _ _ _ _
+   W _ _ B
+
+LOAD_GAME_BOARD
+4 4 15 15
+12 9 W
+   W _ _ B
+  _ _ _ B _
+ _ _ _ B _ _
+B _ _ B _ _ W
+ _ _ _ _ _ _
+  _ _ _ _ _
+   W _ _ B
+
+LOAD_GAME_BOARD
+4 4 15 15
+12 8 W
+   W _ _ B
+  _ _ _ B _
+ _ _ _ B _ _
+B _ _ B _ _ W
+ _ _ B _ _ _
+  _ _ _ _ _
+   W _ _ B
+
+LOAD_GAME_BOARD
+4 4 15 15
+12 9 W
+   W _ _ B
+  _ _ _ _ _
+ _ _ _ _ _ _
+B B B B _ _ W
+ _ _ _ _ _ _
+  _ _ _ _ _
+   W _ _ B
+
+LOAD_GAME_BOARD
+4 4 15 15
+12 8 W
+   W _ _ B
+  _ _ _ _ _
+ _ _ _ _ _ _
+B B B B B _ W
+ _ _ _ _ _ _
+  _ _ _ _ _
+   W _ _ B
+
+LOAD_GAME_BOARD
+4 4 15 15
+5 9 W
+   W _ _ B
+  _ _ _ _ _
+ B B B B W _
+_ _ W _ W _ W
+ _ _ W W _ _
+  _ _ W _ _
+   W _ W B
+
+LOAD_GAME_BOARD
+4 4 15 15
+8 7 W
+   _ _ _ B
+  _ _ _ _ B
+ B B B B W B
+_ _ W _ W _ B
+ _ _ W W _ _
+  _ _ W _ _
+   _ _ W _
+
+LOAD_GAME_BOARD
+4 4 15 15
+15 1 W
+   _ _ _ _
+  B B B B _
+ _ B B B B _
+_ _ B B B _ _
+ _ _ B B B _
+  _ _ _ _ _
+   _ _ _ _

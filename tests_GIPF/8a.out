@@ -1,0 +1,56 @@
+BOARD_STATE_OK
+1_UNIQUE_MOVES
+4 4 15 15
+3 0 B
+   _ W _ _    
+  W B B _ B   
+ _ W W W _ _  
+W B B B W _ B 
+ W W W B _ B 
+  B B W _ _ 
+   W B _ _ 
+BOARD_STATE_OK
+1_UNIQUE_MOVES
+4 4 15 15
+5 0 B
+   B B _ W    
+  W B _ W _   
+ _ B _ W _ _  
+W W W _ _ _ _ 
+ _ _ _ W _ _ 
+  B _ _ W _ 
+   B B _ W 
+BOARD_STATE_OK
+1_UNIQUE_MOVES
+2 3 5 5
+4 0 B
+ _ W  
+_ _ _ 
+ B B 
+BOARD_STATE_OK
+1_UNIQUE_MOVES
+3 3 10 10
+0 4 B
+  _ B B   
+ _ B W W  
+W _ W W B 
+ W _ W B 
+  W _ B 
+BOARD_STATE_OK
+1_UNIQUE_MOVES
+3 3 10 10
+3 0 B
+  B B B   
+ B B W W  
+_ W W B W 
+ _ B W B 
+  _ B B 
+BOARD_STATE_OK
+1_UNIQUE_MOVES
+3 4 12 12
+1 0 W
+  B B W   
+ W W W B  
+B B B W W 
+ W W B B 
+  W B W 

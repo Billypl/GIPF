@@ -1,0 +1,302 @@
+BOARD_STATE_OK
+
+MOVE_COMMITTED
+
+2 3 5 5
+1 2 B
+ W B  
+W B W 
+ W B 
+
+BAD_MOVE_f3_IS_WRONG_INDEX
+
+BAD_MOVE_f3_IS_WRONG_INDEX
+
+BAD_MOVE_d5_IS_WRONG_INDEX
+
+UNKNOWN_MOVE_DIRECTION
+
+BAD_MOVE_b2_IS_WRONG_STARTING_FIELD
+
+BAD_MOVE_b1_IS_WRONG_DESTINATION_FIELD
+
+BOARD_STATE_OK
+
+MOVE_COMMITTED
+
+2 3 5 5
+1 2 B
+ W B  
+B B W 
+ W W 
+
+BOARD_STATE_OK
+
+MOVE_COMMITTED
+
+2 3 5 5
+1 2 B
+ W B  
+B W W 
+ W B 
+
+BAD_MOVE_ROW_IS_FULL
+
+BOARD_STATE_OK
+
+MOVE_COMMITTED
+
+3 3 12 12
+8 9 B
+  W _ B   
+ _ _ _ _  
+B _ _ _ W 
+ _ _ B _ 
+  W _ W 
+
+BOARD_STATE_OK
+
+MOVE_COMMITTED
+
+3 3 12 12
+8 8 W
+  W _ B   
+ _ _ _ _  
+B _ B _ W 
+ _ _ W _ 
+  W _ B 
+
+BOARD_STATE_OK
+
+MOVE_COMMITTED
+
+3 3 12 12
+7 8 B
+  W _ B   
+ _ B _ _  
+B _ W _ W 
+ _ _ B _ 
+  W _ W 
+
+BOARD_STATE_OK
+
+BAD_MOVE_ROW_IS_FULL
+
+3 3 12 12
+7 8 B
+  W _ B   
+ _ B _ _  
+B _ W _ W 
+ _ _ B _ 
+  W _ W 
+
+BOARD_STATE_OK
+
+MOVE_COMMITTED
+
+4 4 15 15
+11 12 B
+   W _ _ B    
+  _ _ _ _ _   
+ _ _ _ _ _ _  
+B _ _ _ _ _ W 
+ _ _ _ _ _ _ 
+  _ _ _ B _ 
+   W _ _ W 
+
+BOARD_STATE_OK
+
+MOVE_COMMITTED
+
+4 4 15 15
+11 11 W
+   W _ _ B    
+  _ _ _ _ _   
+ _ _ _ _ _ _  
+B _ _ _ _ _ W 
+ _ _ _ B _ _ 
+  _ _ _ W _ 
+   W _ _ B 
+
+BOARD_STATE_OK
+
+MOVE_COMMITTED
+
+4 4 15 15
+11 12 B
+   W _ _ B    
+  _ W _ _ _   
+ _ _ _ _ _ _  
+B _ _ _ _ _ W 
+ _ _ _ _ _ _ 
+  _ _ _ _ _ 
+   W _ _ B 
+
+BOARD_STATE_OK
+
+MOVE_COMMITTED
+
+4 4 15 15
+11 11 W
+   B _ _ B    
+  _ W _ _ _   
+ _ _ W _ _ _  
+B _ _ _ _ _ W 
+ _ _ _ _ _ _ 
+  _ _ _ _ _ 
+   W _ _ B 
+
+BOARD_STATE_OK
+
+MOVE_COMMITTED
+
+4 4 15 15
+11 12 B
+   W _ _ B    
+  _ _ _ _ _   
+ _ _ _ _ _ _  
+B _ _ _ _ _ W 
+ _ _ _ _ _ _ 
+  _ W _ _ _ 
+   W _ _ B 
+
+BOARD_STATE_OK
+
+MOVE_COMMITTED
+
+4 4 15 15
+11 11 W
+   W _ _ B    
+  _ _ _ _ _   
+ _ _ _ _ _ _  
+B _ _ _ _ _ W 
+ _ _ W _ _ _ 
+  _ W _ _ _ 
+   B _ _ B 
+
+BOARD_STATE_OK
+
+MOVE_COMMITTED
+
+4 4 15 15
+11 12 B
+   W _ _ W    
+  _ _ _ B _   
+ _ _ _ _ _ _  
+B _ _ _ _ _ W 
+ _ _ _ _ _ _ 
+  _ _ _ _ _ 
+   W _ _ B 
+
+BOARD_STATE_OK
+
+MOVE_COMMITTED
+
+4 4 15 15
+11 11 W
+   W _ _ B    
+  _ _ _ W _   
+ _ _ _ B _ _  
+B _ _ _ _ _ W 
+ _ _ _ _ _ _ 
+  _ _ _ _ _ 
+   W _ _ B 
+
+BOARD_STATE_OK
+
+MOVE_COMMITTED
+
+4 4 15 15
+10 11 B
+   W _ _ W    
+  _ _ _ B _   
+ _ _ _ W _ _  
+B _ _ B _ _ W 
+ _ _ _ _ _ _ 
+  _ _ _ _ _ 
+   W _ _ B 
+
+BOARD_STATE_OK
+
+MOVE_COMMITTED
+
+4 4 15 15
+11 12 B
+   W _ _ B    
+  _ _ _ _ _   
+ _ _ _ _ _ _  
+B _ _ _ _ W W 
+ _ _ _ _ _ _ 
+  _ _ _ _ _ 
+   W _ _ B 
+
+BOARD_STATE_OK
+
+MOVE_COMMITTED
+
+4 4 15 15
+11 11 W
+   W _ _ B    
+  _ _ _ _ _   
+ _ _ _ _ _ _  
+B _ _ _ W W B 
+ _ _ _ _ _ _ 
+  _ _ _ _ _ 
+   W _ _ B 
+
+BOARD_STATE_OK
+
+MOVE_COMMITTED
+
+4 4 15 15
+10 11 B
+   W _ _ B    
+  _ _ _ _ _   
+ _ _ _ _ _ _  
+B _ _ W W B W 
+ _ _ _ _ _ _ 
+  _ _ _ _ _ 
+   W _ _ B 
+
+BOARD_STATE_OK
+
+MOVE_COMMITTED
+
+4 4 15 15
+11 12 B
+   W _ _ B    
+  _ _ _ _ _   
+ _ _ _ _ _ _  
+W B _ _ _ _ W 
+ _ _ _ _ _ _ 
+  _ _ _ _ _ 
+   W _ _ B 
+
+BOARD_STATE_OK
+
+MOVE_COMMITTED
+
+4 4 15 15
+11 11 W
+   W _ _ B    
+  _ _ _ _ _   
+ _ _ _ _ _ _  
+B W B _ _ _ W 
+ _ _ _ _ _ _ 
+  _ _ _ _ _ 
+   W _ _ B 
+
+BOARD_STATE_OK
+
+MOVE_COMMITTED
+
+4 4 15 15
+10 11 B
+   W _ _ B    
+  _ _ _ _ _   
+ _ _ _ _ _ _  
+W B W B _ _ W 
+ _ _ _ _ _ _ 
+  _ _ _ _ _ 
+   W _ _ B 
+

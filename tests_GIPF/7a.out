@@ -1,0 +1,438 @@
+BOARD_STATE_OK
+4_UNIQUE_MOVES
+2 3 5 5
+4 1 W
+ B W  
+_ B B 
+ B _ 
+2 3 5 5
+4 4 W
+ W _  
+_ _ B 
+ _ _ 
+2 3 5 5
+4 4 W
+ _ W  
+_ _ _ 
+ B _ 
+2 3 5 5
+4 1 W
+ _ W  
+_ B B 
+ B B 
+BOARD_STATE_OK
+GAME_IN_PROGRESS
+5_UNIQUE_MOVES
+2 3 5 5
+5 5 B
+ _ _  
+_ _ _ 
+ _ _ 
+2 3 5 5
+2 5 B
+ _ W  
+_ W _ 
+ _ W 
+2 3 5 5
+2 5 B
+ _ _  
+_ W W 
+ _ W 
+2 3 5 5
+2 5 B
+ _ _  
+_ W _ 
+ W W 
+2 3 5 5
+2 5 B
+ _ _  
+W W _ 
+ _ W 
+BOARD_STATE_OK
+THE_WINNER_IS_BLACK
+BOARD_STATE_OK
+THE_WINNER_IS_WHITE
+BOARD_STATE_OK
+THE_WINNER_IS_WHITE
+BOARD_STATE_OK
+5_UNIQUE_MOVES
+2 3 5 5
+3 3 B
+ W _  
+B _ B 
+ _ W 
+2 3 5 5
+3 3 B
+ W B  
+_ _ _ 
+ B W 
+2 3 5 5
+3 0 B
+ B B  
+B W W 
+ B B 
+2 3 5 5
+3 0 B
+ B B  
+B W B 
+ B W 
+2 3 5 5
+3 0 B
+ B B  
+B W B 
+ W B 
+BOARD_STATE_OK
+21_UNIQUE_MOVES
+4 4 15 15
+3 6 B
+   W W _ _    
+  _ B B _ _   
+ _ W W W _ _  
+W B B B W _ _ 
+ W W W B _ _ 
+  B B W _ _ 
+   W B _ _ 
+4 4 15 15
+3 6 B
+   _ W _ _    
+  _ B W _ _   
+ _ W W B _ _  
+W B B B W _ _ 
+ W W W B W _ 
+  B B W _ _ 
+   W B _ _ 
+4 4 15 15
+3 6 B
+   _ W W _    
+  _ B B _ _   
+ _ W W W _ _  
+W B B B W _ _ 
+ W W W B _ _ 
+  B B W _ _ 
+   W B _ _ 
+4 4 15 15
+3 6 B
+   _ W _ W    
+  _ B B _ _   
+ _ W W W _ _  
+W B B B W _ _ 
+ W W W B _ _ 
+  B B W _ _ 
+   W B _ _ 
+4 4 15 15
+3 6 B
+   _ W _ _    
+  _ B B _ W   
+ _ W W W _ _  
+W B B B W _ _ 
+ W W W B _ _ 
+  B B W _ _ 
+   W B _ _ 
+4 4 15 15
+3 6 B
+   _ W _ _    
+  _ B B _ _   
+ _ W W W _ W  
+W B B B W _ _ 
+ W W W B _ _ 
+  B B W _ _ 
+   W B _ _ 
+4 4 15 15
+3 6 B
+   _ W _ _    
+  _ B B _ _   
+ _ W W W _ _  
+W B B B W _ W 
+ W W W B _ _ 
+  B B W _ _ 
+   W B _ _ 
+4 4 15 15
+3 6 B
+   _ W _ _    
+  _ B B _ _   
+ _ W W W _ _  
+W B B B W _ _ 
+ W W W B _ W 
+  B B W _ _ 
+   W B _ _ 
+4 4 15 15
+3 6 B
+   _ W _ _    
+  _ B B _ _   
+ _ W W W _ _  
+W B B B W _ _ 
+ W W W B _ _ 
+  B B W _ W 
+   W B _ _ 
+4 4 15 15
+3 6 B
+   _ W _ _    
+  _ B B _ _   
+ _ W W W _ _  
+W B B B W _ _ 
+ W W W B _ _ 
+  B B W _ _ 
+   W B _ W 
+4 4 15 15
+3 6 B
+   _ W _ _    
+  _ B B _ _   
+ _ W W W _ _  
+W B B B W _ _ 
+ W W W B _ _ 
+  B B W _ _ 
+   W B W _ 
+4 4 15 15
+3 6 B
+   _ W _ _    
+  _ B B _ _   
+ B W W W _ _  
+W W B B W _ _ 
+ W B W B _ _ 
+  B B W _ _ 
+   W W _ _ 
+4 4 15 15
+11 10 B
+   _ W _ _    
+  _ B B _ _   
+ _ _ _ _ _ _  
+_ _ _ _ _ _ _ 
+ _ _ _ _ _ _ 
+  B B B _ _ 
+   W W _ _ 
+4 4 15 15
+3 6 B
+   _ W _ _    
+  _ B B W _   
+ _ W W B _ _  
+W B B W W _ _ 
+ W W B B _ _ 
+  B W W _ _ 
+   W B _ _ 
+4 4 15 15
+3 6 B
+   _ W _ _    
+  _ B B _ _   
+ _ W W W _ _  
+W B B B W _ _ 
+ W W W B _ _ 
+  B B W _ _ 
+   W W B _ 
+4 4 15 15
+15 14 B
+   _ _ B _    
+  _ _ _ _ _   
+ _ _ _ _ _ _  
+_ _ _ _ _ _ _ 
+ _ _ _ _ _ _ 
+  _ _ _ _ _ 
+   _ _ _ _ 
+4 4 15 15
+7 6 B
+   _ W _ _    
+  _ B B _ _   
+ _ W W W _ _  
+_ B B B W _ _ 
+ _ W W B _ _ 
+  _ B B W _ 
+   _ B _ _ 
+4 4 15 15
+7 6 B
+   _ W _ _    
+  _ B B _ _   
+ _ W W W _ _  
+W B B B W _ _ 
+ _ _ _ _ _ _ 
+  B B W _ _ 
+   W B _ _ 
+4 4 15 15
+7 6 B
+   _ W _ _    
+  _ B B _ _   
+ _ _ _ _ _ _  
+W B B B W _ _ 
+ W W W B _ _ 
+  B B W _ _ 
+   W B _ _ 
+4 4 15 15
+3 6 B
+   _ W _ _    
+  _ B B _ _   
+ _ W W W _ _  
+W W B B B W _ 
+ W W W B _ _ 
+  B B W _ _ 
+   W B _ _ 
+4 4 15 15
+3 6 B
+   _ W _ _    
+  W B B _ _   
+ _ W W W _ _  
+W B B B W _ _ 
+ W W W B _ _ 
+  B B W _ _ 
+   W B _ _ 
+BOARD_STATE_OK
+18_UNIQUE_MOVES
+4 4 15 15
+5 3 B
+   W _ _ W    
+  _ _ _ W _   
+ _ _ _ W _ _  
+W W W _ _ _ _ 
+ _ _ _ W _ _ 
+  _ _ _ W _ 
+   _ _ _ W 
+4 4 15 15
+5 3 B
+   _ W _ W    
+  _ _ _ W _   
+ _ _ _ W _ _  
+W W W _ _ _ _ 
+ _ _ _ W _ _ 
+  _ _ _ W _ 
+   _ _ _ W 
+4 4 15 15
+5 3 B
+   _ _ W W    
+  _ _ _ W _   
+ _ _ _ W _ _  
+W W W _ _ _ _ 
+ _ _ _ W _ _ 
+  _ _ _ W _ 
+   _ _ _ W 
+4 4 15 15
+5 3 B
+   _ _ _ W    
+  _ _ _ W W   
+ _ _ _ W _ _  
+W W W _ _ _ _ 
+ _ _ _ W _ _ 
+  _ _ _ W _ 
+   _ _ _ W 
+4 4 15 15
+9 3 B
+   _ _ _ W    
+  _ _ _ W _   
+ _ _ _ W _ _  
+W W W _ _ _ _ 
+ _ _ _ _ _ _ 
+  _ _ _ _ _ 
+   _ _ _ _ 
+4 4 15 15
+9 3 B
+   _ _ _ _    
+  _ _ _ _ _   
+ _ _ _ _ _ _  
+W W W _ _ _ _ 
+ _ _ _ W _ _ 
+  _ _ _ W _ 
+   _ _ _ W 
+4 4 15 15
+9 3 B
+   _ _ _ W    
+  _ _ _ W _   
+ _ _ _ W _ _  
+_ _ _ _ _ _ _ 
+ _ _ _ W _ _ 
+  _ _ _ W _ 
+   _ _ _ W 
+4 4 15 15
+5 3 B
+   _ _ _ W    
+  _ _ _ W _   
+ _ _ _ W _ W  
+W W W _ _ _ _ 
+ _ _ _ W _ _ 
+  _ _ _ W _ 
+   _ _ _ W 
+4 4 15 15
+5 3 B
+   _ _ _ W    
+  _ _ _ W _   
+ _ _ _ W _ _  
+W W W _ _ _ W 
+ _ _ _ W _ _ 
+  _ _ _ W _ 
+   _ _ _ W 
+4 4 15 15
+5 3 B
+   _ _ _ W    
+  _ _ _ W _   
+ _ _ _ W _ _  
+W W W _ _ _ _ 
+ _ _ _ W _ W 
+  _ _ _ W _ 
+   _ _ _ W 
+4 4 15 15
+5 3 B
+   _ _ _ W    
+  _ _ _ W _   
+ _ _ _ W _ _  
+W W W _ _ _ _ 
+ _ _ _ W _ _ 
+  _ _ _ W W 
+   _ _ _ W 
+4 4 15 15
+5 3 B
+   _ _ _ W    
+  _ _ _ W _   
+ _ _ _ W _ _  
+W W W _ _ _ _ 
+ _ _ _ W _ _ 
+  _ _ _ W _ 
+   _ _ W W 
+4 4 15 15
+5 3 B
+   _ _ _ W    
+  _ _ _ W _   
+ _ _ _ W _ _  
+W W W _ _ _ _ 
+ _ _ _ W _ _ 
+  _ _ _ W _ 
+   _ W _ W 
+4 4 15 15
+5 3 B
+   _ _ _ W    
+  _ _ _ W _   
+ _ _ _ W _ _  
+W W W _ _ _ _ 
+ _ _ _ W _ _ 
+  _ _ _ W _ 
+   W _ _ W 
+4 4 15 15
+5 3 B
+   _ _ _ W    
+  _ _ _ W _   
+ _ _ _ W _ _  
+W W W _ _ _ _ 
+ _ _ _ W _ _ 
+  W _ _ W _ 
+   _ _ _ W 
+4 4 15 15
+5 3 B
+   _ _ _ W    
+  _ _ _ W _   
+ _ _ _ W _ _  
+W W W _ _ _ _ 
+ W _ _ W _ _ 
+  _ _ _ W _ 
+   _ _ _ W 
+4 4 15 15
+5 3 B
+   _ _ _ W    
+  _ _ _ W _   
+ W _ _ W _ _  
+W W W _ _ _ _ 
+ _ _ _ W _ _ 
+  _ _ _ W _ 
+   _ _ _ W 
+4 4 15 15
+5 3 B
+   _ _ _ W    
+  W _ _ W _   
+ _ _ _ W _ _  
+W W W _ _ _ _ 
+ _ _ _ W _ _ 
+  _ _ _ W _ 
+   _ _ _ W 

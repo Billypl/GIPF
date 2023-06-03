@@ -1,0 +1,145 @@
+LOAD_GAME_BOARD
+4 4 15 15
+9 3 W
+   W _ _ B
+  _ W _ _ _
+ _ _ B _ _ _
+B _ _ _ _ _ W
+ _ _ B B _ _
+  _ B _ B _
+   B _ _ B
+
+DO_MOVE a5-b5 b: e2 e3
+
+LOAD_GAME_BOARD
+4 4 15 15
+9 3 W
+   W _ _ B
+  _ W _ _ _
+ _ _ B _ _ _
+B _ _ _ _ _ W
+ _ _ B B _ _
+  _ B _ B _
+   B _ _ B
+
+DO_MOVE a5-b5 w: e2 e5
+
+LOAD_GAME_BOARD
+4 4 15 15
+9 3 W
+   W _ _ B
+  _ W _ _ _
+ _ _ B _ _ _
+B _ _ _ _ _ W
+ _ _ B B _ _
+  _ B _ B _
+   B _ _ B
+
+DO_MOVE a5-b5 b: h2 e5
+
+PRINT_GAME_BOARD
+
+LOAD_GAME_BOARD
+4 4 15 15
+9 3 W
+   W _ _ B
+  _ W _ _ _
+ _ _ B _ _ _
+B _ _ _ _ _ W
+ _ _ B B _ _
+  _ B _ B _
+   B _ _ B
+
+DO_MOVE a5-b5 b: e5 h2
+
+PRINT_GAME_BOARD
+
+LOAD_GAME_BOARD
+4 4 15 15
+9 3 W
+   W _ _ B
+  _ W _ _ _
+ _ _ B _ _ _
+B _ _ _ _ _ W
+ _ _ B B _ _
+  _ B _ B _
+   B _ _ B
+
+DO_MOVE a5-b5 b: e2 e5
+
+PRINT_GAME_BOARD
+
+LOAD_GAME_BOARD
+4 4 15 15
+9 3 W
+   W _ _ B
+  _ W _ _ _
+ _ _ B _ _ _
+B _ _ _ _ _ W
+ _ _ B B _ _
+  _ B _ B _
+   B _ _ B
+
+DO_MOVE a5-b5 b: e5 e2
+
+PRINT_GAME_BOARD
+
+LOAD_GAME_BOARD
+4 4 15 15
+9 3 W
+   W _ _ B
+  _ W _ _ _
+ _ _ B _ _ _
+B _ _ _ _ _ W
+ _ _ B B _ _
+  _ B _ B _
+   B _ _ B
+
+DO_MOVE a5-b5 b: e5 e2
+
+PRINT_GAME_BOARD
+
+LOAD_GAME_BOARD
+4 4 15 15
+6 3 W
+   _ _ _ W
+  _ _ _ W _
+ _ _ _ W _ _
+W W W _ _ _ _
+ _ _ _ W _ _
+  _ _ _ W _
+   _ _ _ W
+
+DO_MOVE a1-b2 w: e5 e8
+
+PRINT_GAME_BOARD
+
+LOAD_GAME_BOARD
+4 4 15 15
+6 3 W
+   _ _ _ W
+  _ _ _ W _
+ _ _ _ W _ _
+W W W _ _ _ _
+ _ _ _ W _ _
+  _ _ _ W _
+   _ _ _ W
+
+DO_MOVE a1-b2 w: e5 h2
+
+PRINT_GAME_BOARD
+
+LOAD_GAME_BOARD
+4 4 15 15
+6 3 W
+   _ _ _ W
+  _ _ _ W _
+ _ _ _ W _ _
+W W W _ _ _ _
+ _ _ _ W _ _
+  _ _ _ W _
+   _ _ _ W
+
+DO_MOVE a1-b2 w: e5 h2
+
+PRINT_GAME_BOARD
