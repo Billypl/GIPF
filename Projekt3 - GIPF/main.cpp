@@ -17,18 +17,19 @@ struct ORGINAL
 	const int blackPieciesReserve = 12;
 	const int whitePieciesReserve = 12;
 	const char startingPlayer = 'W';
-};
+} ORGINAL_BOARD;
 
 class Board
 {
 
-	const char EMPTY_FIELD = '_';
-	const char STARTING_ROW_LETTER = 'b';
-	const int STARTING_ROW_NUMBER = 2;
+	char EMPTY_FIELD = '_';
+	char STARTING_ROW_LETTER = 'b';
+	int STARTING_ROW_NUMBER = 2;
 
 public:
 
-	int sideSize = 3; 
+	// sideSize >= 2
+	int sideSize; 
 	int getTotalRowsCount()
 	{
 		return (sideSize - 1) * 2 + 1;
@@ -36,6 +37,12 @@ public:
 	
 	vector<vector<char>> board;
 	map<string, point> namedBoard;
+
+	Board() : Board(ORGINAL_BOARD.sideSize) {};
+	Board(int sideSize) : sideSize(sideSize), board(getTotalRowsCount(), vector<char>(getTotalRowsCount())) 
+	{
+		populateNamedBoard();
+	};
 	
 	struct Field
 	{
@@ -123,10 +130,6 @@ public:
 		return neighbour;
 	}
 
-	Board() : board(getTotalRowsCount(), vector<char>(getTotalRowsCount())) {};
-	// sideSize >= 2
-	Board(int sideSize);
-
 	void populateNamedBoard()
 	{
 		char fieldLetter = STARTING_ROW_LETTER;
@@ -181,92 +184,6 @@ public:
 		}
 	}
 
-	void loadBoard()
-	{
-		string trash;
-
-		cin >> this->sideSize;
-		getline(cin, trash);
-		getline(cin, trash);
-
-		/*
-			4 4 15 15
-			12 12 W
-			   W _ _ B
-			  _ _ _ _ _
-			 _ _ _ _ _ _
-			B _ _ _ _ _ W
-			 _ _ _ _ _ _
-			  _ _ _ _ _
-			   W _ _ B
-
-		*/
-
-		vector<vector<string>> boardString;
-		int rowExpansion = 0;
-		for (int i = 0; i < getTotalRowsCount(); i++)
-		{
-			string line;
-			getline(cin, line);
-			line = Helper::trimString(line);
-			vector<string> lineFields = Helper::explodeString(line, ' ');
-
-			if (lineFields.size() != this->sideSize + rowExpansion)
-			{
-				cout << "WRONG_BOARD_ROW_LENGTH" << endl;
-				return;
-			}
-			else
-			{
-				boardString.push_back(lineFields);
-			}
-			rowExpansion = (i < sideSize - 1) ? rowExpansion + 1 : rowExpansion - 1;
-		}
-		
-
-		for (auto it : boardString)
-		{
-			for (auto itt : it)
-			{
-				cout << itt << " ";
-			}
-			cout << endl;
-		}
-
-
-		//point fieldCoords;
-		//int rowExpansion = STARTING_ROW_NUMBER;
-		//char fieldLetter = STARTING_ROW_LETTER;
-
-		//for (int i = 0; i < getTotalRowsCount(); i++)
-		//{
-		//	if (i < sideSize)
-		//		fieldCoords = { 0, sideSize + i - 1 };
-		//	else
-		//		fieldCoords = { i - sideSize + 1, (sideSize - 2) * 2 + 2 };
-
-		//	int fieldNumber = 2;
-		//	for (int j = 0; j < sideSize + rowExpansion; j++)
-		//	{
-		//		string fieldName = fieldLetter + to_string(fieldNumber);
-		//		namedBoard[fieldName] = fieldCoords;
-		//		fieldCoords += {1, -1};
-		//		fieldNumber++;
-		//	}
-		//	// fixes rows expanding in the middle
-		//	if (i < sideSize - 1)
-		//		rowExpansion++;
-		//	else
-		//		rowExpansion--;
-
-		//	fieldLetter++;
-		//}
-
-		
-
-	}
-
-
 };
 
 class Game
@@ -290,26 +207,86 @@ public:
 
 	}*/
 
-	
+	void loadBoard()
+	{
+		int sideSize; cin >> sideSize;
+		Board newBoard(sideSize);
+
+		string trash;
+		getline(cin, trash);
+		getline(cin, trash);
+
+		vector<vector<string>> boardString = loadFields(newBoard);
+		if (boardString.empty())
+		{
+			cout << "WRONG_BOARD_ROW_LENGTH" << endl;
+			return;
+		}
+		offsetFields(boardString, newBoard);
+		board = newBoard;
+	}
+
+	vector<vector<string>> loadFields(Board newBoard)
+	{
+		vector<vector<string>> boardString;
+		int rowExpansion = 0;
+		for (int i = 0; i < newBoard.getTotalRowsCount(); i++)
+		{
+			string line;
+			getline(cin, line);
+			line = Helper::trimString(line);
+			vector<string> lineFields = Helper::explodeString(line, ' ');
+
+			if (lineFields.size() != newBoard.sideSize + rowExpansion)
+			{
+				// empty means loading failed
+				return {};
+			}
+			else
+			{
+				boardString.push_back(lineFields);
+			}
+			rowExpansion = (i < newBoard.sideSize - 1) ? rowExpansion + 1 : rowExpansion - 1;
+		}
+		return boardString;
+	}
+
+	void offsetFields(const vector<vector<string>>& boardString, Board& newBoard)
+	{
+		int rowExpansion = newBoard.sideSize - 1;
+		for (int i = 0; i < newBoard.getTotalRowsCount(); i++)
+		{
+			for (int j = 0; j < boardString[i].size(); j++)
+			{
+				newBoard.board[i][j + rowExpansion] = boardString[i][j][0];
+			}
+			rowExpansion = (rowExpansion > 0) ? rowExpansion - 1 : 0;
+		}
+	}
 
 };
 
 
+void boardTest()
+{
+	Board board;
+	board.populateNamedBoard();
+
+	board["c3"].value = 'X';
+	board["c4"].value = 'Z';
+	board["b2"].value = '2';
+	board["b3"].value = '3';
+	board["b4"].value = '4';
+	board.getNeighbour("c3", Board::Move::UPPER_RIGHT).print();
+	cout << endl;
+	board.printBoard();
+}
+
 int main()
 {
-	//Board board;
-	//board.populateNamedBoard();
-
-	//board["c3"].value = 'X';
-	//board["c4"].value = 'Z';
-	//board["b2"].value = '2';
-	//board["b3"].value = '3';
-	//board["b4"].value = '4';
-	//board.getNeighbour("c3", Board::Move::UPPER_RIGHT).print();
-	//cout << endl;
-	//board.printBoard();
+	//boardTest();
 	Game game;
-	game.board.loadBoard();
-
+	game.loadBoard();
+	game.board["b2"].print();
 
 }
