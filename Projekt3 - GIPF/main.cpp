@@ -22,11 +22,14 @@ struct ORGINAL
 class Board
 {
 
+
+public:
+
 	char EMPTY_FIELD = '_';
 	char STARTING_ROW_LETTER = 'b';
 	int STARTING_ROW_NUMBER = 2;
-
-public:
+	char WHITE_PLAYER = 'W';
+	char BLACK_PLAYER = 'B';
 
 	// sideSize >= 2
 	int sideSize; 
@@ -38,10 +41,10 @@ public:
 	vector<vector<char>> board;
 	map<string, point> namedBoard;
 
-	Board() : Board(ORGINAL_BOARD.sideSize) {};
+	Board() {};
 	Board(int sideSize) : sideSize(sideSize), board(getTotalRowsCount(), vector<char>(getTotalRowsCount())) 
 	{
-		populateNamedBoard();
+		createNamedBoard();
 	};
 	
 	struct Field
@@ -73,12 +76,12 @@ public:
 
 	enum Move
 	{
-		UPPER_LEFT,		// (0, -1)
-		UPPER_RIGHT,	// (1, -1)
-		RIGHT,			// (1, 0)
-		BOTTOM_RIGHT,	// (0, 1)
-		BOTTOM_LEFT,	// (1, 1)
-		LEFT			// (-1, 0)
+		UPPER_LEFT,		
+		UPPER_RIGHT,	
+		RIGHT,			
+		BOTTOM_RIGHT,	
+		BOTTOM_LEFT,	
+		LEFT			
 	};
 
 	struct Moves
@@ -130,7 +133,7 @@ public:
 		return neighbour;
 	}
 
-	void populateNamedBoard()
+	void createNamedBoard()
 	{
 		char fieldLetter = STARTING_ROW_LETTER;
 		int rowExpansion = 0;
@@ -178,10 +181,33 @@ public:
 			}
 			for (int j = 0; j < getTotalRowsCount(); j++)
 			{
-				cout << board[i][j] << " ";
+				if (board[i][j] >= 'A')
+				{
+					cout << board[i][j] << " ";
+				}
+				else
+				{
+					cout << " ";
+				}
 			}
 			cout << endl;
 		}
+	}
+
+	int getActivePawnsNumberOfColor(char color)
+	{
+		int counter = 0;
+		for (const auto& it : board)
+		{
+			for (const auto& itt : it)
+			{
+				if (itt == color)
+				{
+					counter++;
+				}
+			}
+		}
+		return counter;
 	}
 
 };
@@ -194,8 +220,11 @@ public:
 	Board board;
 
 	int triggerCollectionNumber;
-	int whitePieces;
-	int blackPiecies;
+	int whitePiecesNumber;
+	int blackPieciesNumber;
+	int reserveWhitePawnsNumber;
+	int reserveBlackPawnsNumber;
+	char startingPlayer;
 
 	// sideSize >= 2
 	// 2 < triggerCollectionNumber < 2*sideSize - 1
@@ -212,22 +241,43 @@ public:
 		int sideSize; cin >> sideSize;
 		Board newBoard(sideSize);
 
-		string trash;
-		getline(cin, trash);
-		getline(cin, trash);
+		cin >> this->triggerCollectionNumber;
+		cin >> this->whitePiecesNumber;
+		cin >> this->blackPieciesNumber;
+		
+		cin >> this->reserveWhitePawnsNumber;
+		cin >> this->reserveBlackPawnsNumber;
+		cin >> this->startingPlayer;
+
 
 		vector<vector<string>> boardString = loadFields(newBoard);
 		if (boardString.empty())
 		{
 			cout << "WRONG_BOARD_ROW_LENGTH" << endl;
+			board = {};
 			return;
 		}
 		offsetFields(boardString, newBoard);
+		if (newBoard.getActivePawnsNumberOfColor(newBoard.WHITE_PLAYER) + reserveWhitePawnsNumber > whitePiecesNumber)
+		{
+			cout << "WRONG_WHITE_PAWNS_NUMBER" << endl;
+			board = {};
+			return;
+		}
+		else if (newBoard.getActivePawnsNumberOfColor(newBoard.BLACK_PLAYER) + reserveBlackPawnsNumber > blackPieciesNumber)
+		{
+			cout << "WRONG_BLACK_PAWNS_NUMBER" << endl;
+			board = {};
+			return;
+		}
 		board = newBoard;
+		cout << "BOARD_STATE_OK" << endl;
 	}
 
 	vector<vector<string>> loadFields(Board newBoard)
 	{
+		bool isBoardGood = true;
+		string trash; getline(cin, trash);
 		vector<vector<string>> boardString;
 		int rowExpansion = 0;
 		for (int i = 0; i < newBoard.getTotalRowsCount(); i++)
@@ -239,8 +289,7 @@ public:
 
 			if (lineFields.size() != newBoard.sideSize + rowExpansion)
 			{
-				// empty means loading failed
-				return {};
+				isBoardGood = false;
 			}
 			else
 			{
@@ -248,7 +297,14 @@ public:
 			}
 			rowExpansion = (i < newBoard.sideSize - 1) ? rowExpansion + 1 : rowExpansion - 1;
 		}
-		return boardString;
+		if (isBoardGood)
+		{
+			return boardString;
+		}
+		else
+		{
+			return {};
+		}
 	}
 
 	void offsetFields(const vector<vector<string>>& boardString, Board& newBoard)
@@ -264,13 +320,34 @@ public:
 		}
 	}
 
+	void printGame()
+	{
+		if (board.board.size() == 0)
+		{
+			cout << "EMPTY_BOARD" << endl;
+			return;
+		}
+
+		cout << board.sideSize << " ";
+		cout << triggerCollectionNumber << " ";
+		cout << whitePiecesNumber << " ";
+		cout << blackPieciesNumber << " ";
+		cout << endl;
+		cout << reserveWhitePawnsNumber << " ";
+		cout << reserveBlackPawnsNumber << " ";
+		cout << startingPlayer;
+		cout << endl;
+
+		board.printBoard();
+	}
+
 };
 
 
 void boardTest()
 {
 	Board board;
-	board.populateNamedBoard();
+	board.createNamedBoard();
 
 	board["c3"].value = 'X';
 	board["c4"].value = 'Z';
@@ -284,9 +361,18 @@ void boardTest()
 
 int main()
 {
-	//boardTest();
 	Game game;
-	game.loadBoard();
-	game.board["b2"].print();
-	//
+	string command;
+	while (getline(cin, command))
+	{
+		if (command == "LOAD_GAME_BOARD")
+		{
+			game.loadBoard();
+			getline(cin, command);
+		}
+		else if (command == "PRINT_GAME_BOARD")
+		{
+			game.printGame();
+		}
+	}
 }
