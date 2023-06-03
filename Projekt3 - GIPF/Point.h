@@ -1,5 +1,6 @@
 #pragma once
 #include <algorithm>
+#include <iostream>
 
 class point
 {
@@ -22,6 +23,10 @@ public:
 
     void swap();
     void swap(point& other);
+    void print()
+    {
+        std::cout << "(" << x << "," << y << ")";
+    }
 };
 
 
@@ -85,3 +90,4 @@ void point::operator*=(int scale)
 {
     (*this) = ((*this) * scale);
 }
+
