@@ -24,7 +24,6 @@ struct ORGINAL
 class Board
 {
 
-
 public:
 
 	char EMPTY_FIELD = '_';
@@ -42,19 +41,21 @@ public:
 	
 	vector<vector<char>> board;
 	map<string, point> namedBoard;
+	map<string, point> namedFrame;
 	map<point, string> positionedBoard;
 
 	Board() {};
 	Board(int sideSize) : sideSize(sideSize), board(getTotalRowsCount(), vector<char>(getTotalRowsCount())) 
 	{
-		createNamedBoard();
+		createHashMaps();
 	};
 	
 	struct Field
 	{
 		point coords;
 		char& value;
-		Field(point coords, char& value) : coords(coords), value(value) {};
+		string name;
+		Field(point coords, char& value, string name) : coords(coords), value(value), name(name) {};
 		void print()
 		{
 			coords.print();
@@ -64,10 +65,16 @@ public:
 
 	Field get(string fieldName)
 	{
-		if (namedBoard.find(fieldName) != namedBoard.end())
+		if (isBoard(fieldName))
 		{
 			point coords = namedBoard[fieldName];
-			Field field(coords, board[coords.y][coords.x]);
+			Field field(coords, board[coords.y][coords.x], fieldName);
+			return field;
+		}
+		else if (isFrame(fieldName))
+		{
+			point coords = namedFrame[fieldName];
+			Field field(coords, board[0][0], fieldName);
 			return field;
 		}
 		throw "Wrong field name!";
@@ -77,14 +84,20 @@ public:
 		return get(field);
 	}
 
-	string operator[](point position)
+	Field operator[](point position)
 	{
 		return get(position);
 	}
 
-	string& get(point position)
+	Field get(point position)
 	{
-		return positionedBoard[position];
+		if (positionedBoard.find(position) != positionedBoard.end())
+		{
+			string fieldName = positionedBoard[position];
+			Field field(position, board[position.y][position.x], fieldName);
+			return field;
+		}
+		throw "Wrong coords!";
 	}
 
 
@@ -109,11 +122,6 @@ public:
 	} MOVES;
 
 	Field getNeighbour(string fieldName, Move move)
-	{
-		return getNeighbour(this->get(fieldName), move);
-	}
-
-	Field getNeighbour(Field field, Move move)
 	{
 		point offset;
 
@@ -142,14 +150,32 @@ public:
 			break;
 		}
 
-		point neighbourCoords = field.coords + offset;
-		Field neighbour(neighbourCoords, board[neighbourCoords.y][neighbourCoords.x]);
-		return neighbour;
+		point fieldCoords;
+		if(isFrame(fieldName))
+		{
+			fieldCoords = namedFrame[fieldName];
+		}
+		else if (isBoard(fieldName))
+		{
+			fieldCoords = namedBoard[fieldName];
+		}
+
+		point neighbourCoords = fieldCoords + offset;
+		if (positionedBoard.find(neighbourCoords) != positionedBoard.end())
+		{
+			Field neighbour(neighbourCoords, board[neighbourCoords.y][neighbourCoords.x], positionedBoard[neighbourCoords]);
+			return neighbour;
+		}
+		else
+		{
+			Field neighbour(neighbourCoords, board[0][0], "x9");
+			return neighbour;
+		}
+
 	}
 
 
-
-	void createNamedBoard()
+	void createHashMaps()
 	{
 		char fieldLetter = STARTING_ROW_LETTER;
 		int rowExpansion = 0;
@@ -168,13 +194,12 @@ public:
 				string fieldName = fieldLetter + to_string(fieldNumber);
 				namedBoard[fieldName] = fieldCoords;
 				positionedBoard.insert({ fieldCoords , fieldName });
-				//positionedBoard[fieldCoords] = fieldName;
+
 				fieldCoords += {1, -1};
 				fieldNumber++;
 			}
 			// fixes rows expanding in the middle
 			rowExpansion = (i < sideSize - 1) ? rowExpansion + 1 : rowExpansion - 1;
-
 			fieldLetter++;
 		}
 
@@ -183,8 +208,49 @@ public:
 			point field = p.second;
 			board[field.x][field.y] = EMPTY_FIELD;
 		}
+		createFrameMap();
+	}
+
+	void createFrameMap()
+	{
+		sideSize++;
+		char fieldLetter = 'a';
+		int rowExpansion = 0;
+		point fieldCoords;
+
+		for (int i = 0; i < getTotalRowsCount(); i++)
+		{
+			if (i < sideSize)
+				fieldCoords = { 0 - 1, sideSize + i - 1 - 1};
+			else
+				fieldCoords = { i - sideSize + 1 - 1, (sideSize - 2) * 2 + 2 - 1};
+
+			int fieldNumber = 1;
+			for (int j = 0; j < sideSize + rowExpansion; j++)
+			{
+				string fieldName = fieldLetter + to_string(fieldNumber);
+				namedFrame[fieldName] = fieldCoords;
+
+				fieldCoords += {1, -1};
+				fieldNumber++;
+			}
+			// fixes rows expanding in the middle
+			rowExpansion = (i < sideSize - 1) ? rowExpansion + 1 : rowExpansion - 1;
+			fieldLetter++;
+		}
+		sideSize--;
+
+
+		for (auto it : namedBoard)
+		{
+			if (namedFrame.find(it.first) != namedFrame.end())
+			{
+				namedFrame.erase(it.first);
+			}
+		}
 
 	}
+
 
 	void printBoard()
 	{
@@ -210,6 +276,21 @@ public:
 			}
 			cout << endl;
 		}
+	}
+
+	bool isInBounds(string filename)
+	{
+		return  isFrame(filename) || isBoard(filename);
+	}
+
+	bool isFrame(string filename)
+	{
+		return namedFrame.find(filename) != namedFrame.end();
+	}
+
+	bool isBoard(string filename)
+	{
+		return namedBoard.find(filename) != namedBoard.end();
 	}
 
 	int getActivePawnsNumberOfColor(char color)
@@ -242,17 +323,16 @@ public:
 	int blackPieciesNumber;
 	int reserveWhitePawnsNumber;
 	int reserveBlackPawnsNumber;
-	char startingPlayer;
+	char currentPlayer;
 
 	// sideSize >= 2
 	// 2 < triggerCollectionNumber < 2*sideSize - 1
 	// white/black Piecies > 3	   
 	// | white - black | <= 3
 	// S K GW GB
-	/*void loadBoard(int sideSize, int triggerCollectionNumber, int whitePieces, int blackPiecies)
-	{
-
-	}*/
+	
+	
+	/* BOARD LOADING */
 
 	void loadBoard()
 	{
@@ -265,7 +345,7 @@ public:
 		
 		cin >> this->reserveWhitePawnsNumber;
 		cin >> this->reserveBlackPawnsNumber;
-		cin >> this->startingPlayer;
+		cin >> this->currentPlayer;
 
 
 		vector<vector<string>> boardString = loadFields(newBoard);
@@ -353,6 +433,9 @@ public:
 			rowExpansion = (rowExpansion > 0) ? rowExpansion - 1 : 0;
 		}
 	}
+
+
+	/* ERROR_FOUND_x_ROW_OF_LENGTH_K */
 
 	int getPawnsInBadStartingPositionNumber(Board newBoard)
 	{
@@ -447,6 +530,100 @@ public:
 		return badRowsCounter;
 	}
 
+
+	/* MOVE */
+
+	void doMove(string srcField, string dstField)
+	{
+		/* 1. ARE IN BOUNDS? */
+		if (!board.isInBounds(srcField))
+		{
+			cout << "BAD_MOVE_" << srcField << "_IS_WRONG_INDEX" << endl;
+			return;
+		}
+		else if (!board.isInBounds(dstField))
+		{
+			cout << "BAD_MOVE_" << dstField << "_IS_WRONG_INDEX" << endl;
+			return;
+		}
+
+		/* 3. IS GOOD STARTING FIELD? */
+		if (!board.isFrame(srcField))
+		{
+			cout << "BAD_MOVE_" << srcField << "_IS_WRONG_STARTING_FIELD" << endl;
+			return;
+		}
+
+		/* 4. IS GOOD ENDING FIELD? */
+		if (!board.isBoard(dstField))
+		{
+			cout << "BAD_MOVE_" << dstField << "_IS_WRONG_DESTINATION_FIELD" << endl;
+			return;
+		}
+
+		/* 2. ARE NEIGHBOURS? */
+		bool isNeighbour = false;
+		Board::Move direction;
+		for (int move = Board::Move::UPPER_LEFT; move != Board::Move::LEFT + 1; move++)
+		{
+			if (board.getNeighbour(srcField, static_cast<Board::Move>(move)).name == dstField)
+			{
+				isNeighbour = true;
+				direction = static_cast<Board::Move>(move);
+			}
+		}
+		if (!isNeighbour)
+		{
+			cout << "UNKNOWN_MOVE_DIRECTION" << endl;
+			return;
+		}
+
+		/* 5. IF ROW FULL? */ 
+		if (placePawn(direction, board[srcField], currentPlayer))
+		{
+			if (currentPlayer == 'W')
+			{
+				currentPlayer = 'B';
+				reserveWhitePawnsNumber--;
+			}
+			else
+			{
+				currentPlayer = 'W';
+				reserveBlackPawnsNumber--;
+			}
+
+			cout << "MOVE_COMMITTED" << endl;
+
+		}
+		else
+		{
+			cout << "BAD_MOVE_ROW_IS_FULL" << endl;
+		}
+	}
+
+	bool placePawn(Board::Move direction, Board::Field current, char player)
+	{
+		Board::Field next = board.getNeighbour(current.name, direction);
+		if (next.value == '_')
+		{
+			next.value = player;
+			return true;
+		}
+		if (next.value == '\0')
+		{
+			return false;
+		}
+		if(placePawn(direction, next, next.value))
+		{
+			next.value = player;
+			return true;
+		}
+		return false;
+	}
+
+
+	/* OTHER */
+
 	void printGame()
 	{
 		if (board.board.size() == 0)
@@ -462,40 +639,28 @@ public:
 		cout << endl;
 		cout << reserveWhitePawnsNumber << " ";
 		cout << reserveBlackPawnsNumber << " ";
-		cout << startingPlayer;
+		cout << currentPlayer;
 		cout << endl;
 
 		board.printBoard();
 	}
 
 };
-/*
-
-LOAD_GAME_BOARD
-4 4 15 15
-12 9 W
-   _ B _ W
-  _ B _ B _
- _ B _ _ _ _
-_ B _ _ _ _ W
- _ _ _ _ _ _
-  _ _ _ _ _
-   W _ _ B
 
 
-*/
+
 
 void boardTest()
 {
-	Board board(3);
+	Board board(2);
 
 	board["c3"].value = 'X';
 
-	cout << board[board["c3"].coords] << endl;
-	board["c4"].value = 'Z';
-	board["b2"].value = '2';
-	board["b3"].value = '3';
-	board["b4"].value = '4';
+	cout << board[board["c3"].coords].value << endl;
+	//board["c4"].value = 'Z';
+	//board["b2"].value = '2';
+	//board["b3"].value = '3';
+	//board["b4"].value = '4';
 	board.getNeighbour("c3", Board::Move::UPPER_RIGHT).print();
 	cout << endl;
 	board.printBoard();
@@ -522,9 +687,9 @@ int main()
 		{
 			command = Helper::trimString(command);
 			command = Helper::explodeString(command, ' ')[1];
-			cout << command << endl;
-			string fieldOne = Helper::explodeString(command, '-')[0];
-			string fieldTwo = Helper::explodeString(command, '-')[1];
+			string srcField = Helper::explodeString(command, '-')[0];
+			string dstField = Helper::explodeString(command, '-')[1];
+			game.doMove(srcField, dstField);
 		}
 		command.clear();
 	}
