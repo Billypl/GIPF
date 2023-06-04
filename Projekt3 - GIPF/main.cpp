@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <map>
+#include <unordered_map>
 #include <string>
 #include <math.h>
 #include "Point.h"
@@ -18,6 +19,7 @@ struct ORGINAL
 	const int whitePieciesReserve = 12;
 	const char startingPlayer = 'W';
 } ORGINAL_BOARD;
+
 
 class Board
 {
@@ -40,6 +42,7 @@ public:
 	
 	vector<vector<char>> board;
 	map<string, point> namedBoard;
+	map<point, string> positionedBoard;
 
 	Board() {};
 	Board(int sideSize) : sideSize(sideSize), board(getTotalRowsCount(), vector<char>(getTotalRowsCount())) 
@@ -73,6 +76,17 @@ public:
 	{
 		return get(field);
 	}
+
+	string operator[](point position)
+	{
+		return get(position);
+	}
+
+	string& get(point position)
+	{
+		return positionedBoard[position];
+	}
+
 
 	enum Move
 	{
@@ -133,6 +147,8 @@ public:
 		return neighbour;
 	}
 
+
+
 	void createNamedBoard()
 	{
 		char fieldLetter = STARTING_ROW_LETTER;
@@ -151,6 +167,8 @@ public:
 			{
 				string fieldName = fieldLetter + to_string(fieldNumber);
 				namedBoard[fieldName] = fieldCoords;
+				positionedBoard.insert({ fieldCoords , fieldName });
+				//positionedBoard[fieldCoords] = fieldName;
 				fieldCoords += {1, -1};
 				fieldNumber++;
 			}
@@ -270,6 +288,7 @@ public:
 			board = {};
 			return;
 		}
+		// TODO: check for 4 nighbouring pawns
 		board = newBoard;
 		cout << "BOARD_STATE_OK" << endl;
 	}
@@ -320,6 +339,12 @@ public:
 		}
 	}
 
+	bool isPawnsInBadStartingPosition(Board newBoard)
+	{
+
+	}
+
+
 	void printGame()
 	{
 		if (board.board.size() == 0)
@@ -346,10 +371,11 @@ public:
 
 void boardTest()
 {
-	Board board;
-	board.createNamedBoard();
+	Board board(3);
 
 	board["c3"].value = 'X';
+
+	cout << board[board["c3"].coords] << endl;
 	board["c4"].value = 'Z';
 	board["b2"].value = '2';
 	board["b3"].value = '3';
@@ -359,20 +385,32 @@ void boardTest()
 	board.printBoard();
 }
 
+
+
 int main()
 {
-	Game game;
-	string command;
-	while (getline(cin, command))
-	{
-		if (command == "LOAD_GAME_BOARD")
-		{
-			game.loadBoard();
-			getline(cin, command);
-		}
-		else if (command == "PRINT_GAME_BOARD")
-		{
-			game.printGame();
-		}
-	}
+	//Game game;
+	//string command;
+	//while (getline(cin, command))
+	//{
+	//	if (command == "LOAD_GAME_BOARD")
+	//	{
+	//		game.loadBoard();
+	//		getline(cin, command);
+	//	}
+	//	else if (command == "PRINT_GAME_BOARD")
+	//	{
+	//		game.printGame();
+	//	}
+	//	else if (command.find("DO_MOVE") != string::npos)
+	//	{
+	//		command = Helper::trimString(command);
+	//		command = Helper::explodeString(command, ' ')[1];
+	//		cout << command << endl;
+	//		string fieldOne = Helper::explodeString(command, '-')[0];
+	//		string fieldTwo = Helper::explodeString(command, '-')[1];
+	//	}
+	//	command.clear();
+	//}
+	boardTest();
 }

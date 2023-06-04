@@ -4,6 +4,20 @@
 #include <sstream>
 #define WHITESPACE " \n\r\t\f\v"
 
+namespace std
+{
+    template<> struct less<point>
+    {
+        bool operator() (const point& lhs, const point& rhs) const
+        {
+            if (lhs.x != rhs.x)
+                return lhs.x < rhs.x;
+            else
+                return lhs.y < rhs.y;
+        }
+    };
+}
+
 class Helper
 {
 
