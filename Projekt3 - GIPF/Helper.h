@@ -52,4 +52,22 @@ public:
         return result;
     }
 
+    static std::vector<std::vector<char>> transposeMatrix(const std::vector<std::vector<char>>& matrix)
+    {
+        int rows = matrix.size();
+        int columns = matrix[0].size();
+
+        std::vector<std::vector<char>> transposed(columns, std::vector<char>(rows));
+
+        for (int i = 0; i < rows; ++i) 
+        {
+            for (int j = 0; j < columns; ++j) 
+            {
+                transposed[j][i] = matrix[i][j];
+            }
+        }
+
+        return transposed;
+    }
+
 };

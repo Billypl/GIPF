@@ -289,6 +289,21 @@ public:
 			return;
 		}
 		// TODO: check for 4 nighbouring pawns
+		int errorOfLengthK = getPawnsInBadStartingPositionNumber(newBoard);
+		if (errorOfLengthK != 0)
+		{
+			string templateMsg1 = "ERROR_FOUND_";
+			string templateMsg2 = "_ROW";
+			string templateMsg3 = "_OF_LENGTH_K";
+			if (errorOfLengthK > 1)
+			{
+				templateMsg2 += 'S';
+			}
+			string finalMsg = templateMsg1 + to_string(errorOfLengthK) + templateMsg2 + templateMsg3;
+			cout << finalMsg << endl;
+			return;
+		}
+		
 		board = newBoard;
 		cout << "BOARD_STATE_OK" << endl;
 	}
@@ -339,11 +354,98 @@ public:
 		}
 	}
 
-	bool isPawnsInBadStartingPosition(Board newBoard)
+	int getPawnsInBadStartingPositionNumber(Board newBoard)
 	{
+		// FIND DIAGONAL LETTER
+		char diagonalLetter = board.STARTING_ROW_LETTER;
+		for (int i = 0; i < board.sideSize - 1; i++)
+		{
+			diagonalLetter++;
+		}
 
+		int badRowsCounter = 0;
+		// RIGHT
+		badRowsCounter += getBadStartingPositionsRightRowsNumber(newBoard);
+		// DOWN
+		badRowsCounter += getBadStartingPositionsDownRowsNumber(newBoard);
+		// UP-RIGHT
+		badRowsCounter += getBadStartingPositionsDiagonalRowsNumber(newBoard);
+
+		return badRowsCounter;
 	}
 
+	int getBadStartingPositionsRightRowsNumber(Board newBoard)
+	{
+		int badRowsCounter = 0;
+		int rowExpansion = newBoard.sideSize - 1;
+		for (int i = 0; i < newBoard.getTotalRowsCount(); i++)
+		{
+			int pawnsInRowCounter = 1;
+			char prevPawn = newBoard.board[i][rowExpansion];
+			for (int j = rowExpansion; j < newBoard.board[i].size() && newBoard.board[i][j] != '\0'; j++)
+			{
+				if (newBoard.board[i][j] == prevPawn && newBoard.board[i][j] != '_')
+				{
+					pawnsInRowCounter++;
+					if (pawnsInRowCounter == triggerCollectionNumber)
+					{
+						badRowsCounter++;
+						continue;
+					}
+				}
+				else
+				{
+					pawnsInRowCounter = 1;
+				}
+				prevPawn = newBoard.board[i][j];
+			}
+			rowExpansion = (rowExpansion > 0) ? rowExpansion - 1 : 0;
+		}
+		return badRowsCounter;
+	}
+
+	int getBadStartingPositionsDownRowsNumber(Board newBoard)
+	{
+		newBoard.board = Helper::transposeMatrix(newBoard.board);
+		int badRowsCounter = getBadStartingPositionsRightRowsNumber(newBoard);
+		return badRowsCounter;
+	}
+
+	int getBadStartingPositionsDiagonalRowsNumber(Board newBoard)
+	{
+		int badRowsCounter = 0;
+		char rowLetter = newBoard.STARTING_ROW_LETTER;
+		int rowExpansion = 0;
+		for (int i = 0; i < newBoard.getTotalRowsCount(); i++)
+		{
+			int pawnsInRowCounter = 1;
+			int rowNumber = newBoard.STARTING_ROW_NUMBER;
+			char prevPawn = newBoard[rowLetter + to_string(rowNumber)].value;
+			for (int j = 1; j < newBoard.sideSize + rowExpansion; j++)
+			{
+				rowNumber++;
+				string fieldName = rowLetter + to_string(rowNumber);
+				if (newBoard[fieldName].value == prevPawn && newBoard[fieldName].value != '_')
+				{
+					pawnsInRowCounter++;
+					if (pawnsInRowCounter == triggerCollectionNumber)
+					{
+						badRowsCounter++;
+						continue;
+					}
+				}
+				else
+				{
+					pawnsInRowCounter = 1;
+				}
+
+				prevPawn = newBoard[fieldName].value;
+			}
+			rowExpansion = (i < newBoard.sideSize - 1) ? rowExpansion + 1 : rowExpansion - 1;
+			rowLetter++;
+		}
+		return badRowsCounter;
+	}
 
 	void printGame()
 	{
@@ -367,7 +469,21 @@ public:
 	}
 
 };
+/*
 
+LOAD_GAME_BOARD
+4 4 15 15
+12 9 W
+   _ B _ W
+  _ B _ B _
+ _ B _ _ _ _
+_ B _ _ _ _ W
+ _ _ _ _ _ _
+  _ _ _ _ _
+   W _ _ B
+
+
+*/
 
 void boardTest()
 {
@@ -389,28 +505,29 @@ void boardTest()
 
 int main()
 {
-	//Game game;
-	//string command;
-	//while (getline(cin, command))
-	//{
-	//	if (command == "LOAD_GAME_BOARD")
-	//	{
-	//		game.loadBoard();
-	//		getline(cin, command);
-	//	}
-	//	else if (command == "PRINT_GAME_BOARD")
-	//	{
-	//		game.printGame();
-	//	}
-	//	else if (command.find("DO_MOVE") != string::npos)
-	//	{
-	//		command = Helper::trimString(command);
-	//		command = Helper::explodeString(command, ' ')[1];
-	//		cout << command << endl;
-	//		string fieldOne = Helper::explodeString(command, '-')[0];
-	//		string fieldTwo = Helper::explodeString(command, '-')[1];
-	//	}
-	//	command.clear();
-	//}
-	boardTest();
+	Game game;
+	string command;
+	while (getline(cin, command))
+	{
+		if (command == "LOAD_GAME_BOARD")
+		{
+			game.loadBoard();
+			getline(cin, command);
+		}
+		else if (command == "PRINT_GAME_BOARD")
+		{
+			game.printGame();
+		}
+		else if (command.find("DO_MOVE") != string::npos)
+		{
+			command = Helper::trimString(command);
+			command = Helper::explodeString(command, ' ')[1];
+			cout << command << endl;
+			string fieldOne = Helper::explodeString(command, '-')[0];
+			string fieldTwo = Helper::explodeString(command, '-')[1];
+		}
+		command.clear();
+	}
+	//boardTest();
+
 }
