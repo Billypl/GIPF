@@ -626,6 +626,7 @@ public:
 	{
 		captureThePawnsRight();
 		captureThePawnsDown();
+		captureThePawnsDiagonal();
 	}
 
 	void captureThePawnsRight()
@@ -677,18 +678,83 @@ public:
 			{
 				removePawns(pawns);
 				isRowToCapture = false;
-				break;
 			}
 		}
 		
 	}
-
 
 	void captureThePawnsDown()
 	{
 		board.board = Helper::transposeMatrix(board.board);
 		captureThePawnsRight();
 		board.board = Helper::transposeMatrix(board.board);
+	}
+
+	void captureThePawnsDiagonal()
+	{
+		char rowLetter = board.STARTING_ROW_LETTER;
+		int rowExpansion = 0;
+		for (int i = 0; i < board.getTotalRowsCount(); i++)
+		{
+			int pawnsInRowCounter = 1;
+			int rowNumber = board.STARTING_ROW_NUMBER;
+			char prevPawn = board[rowLetter + to_string(rowNumber)].value;
+			bool isRowToCapture = false;
+
+			vector<Board::Field> pawns;
+			pawns.push_back(board[rowLetter + to_string(rowNumber)]);
+			for (int j = 1; j < board.sideSize + rowExpansion; j++)
+			{
+				rowNumber++;
+				string fieldName = rowLetter + to_string(rowNumber);
+
+				if (board[fieldName].value == '_')
+				{
+					if (isRowToCapture)
+					{
+						break;
+					}
+					else
+					{
+						pawnsInRowCounter = 1;
+						pawns.clear();
+						pawns.push_back(board[fieldName]);
+					}
+				}
+				else if (board[fieldName].value == prevPawn && board[fieldName].value != '_')
+				{
+					pawnsInRowCounter++;
+					pawns.push_back(board[fieldName]);
+					if (pawnsInRowCounter == triggerCollectionNumber)
+					{
+						isRowToCapture = true;
+					}
+				}
+				else if (board[fieldName].value != prevPawn && board[fieldName].value != '_')
+				{
+					pawns.push_back(board[fieldName]);
+				}
+				else if (isRowToCapture && board[fieldName].value != '_')
+				{
+					pawnsInRowCounter++;
+					pawns.push_back(board[fieldName]);
+				}
+				else
+				{
+					pawnsInRowCounter = 1;
+					pawns.clear();
+					pawns.push_back(board[fieldName]);
+				}
+				prevPawn = board[fieldName].value;
+			}
+			rowExpansion = (i < board.sideSize - 1) ? rowExpansion + 1 : rowExpansion - 1;
+			rowLetter++;
+			if (isRowToCapture)
+			{
+				removePawns(pawns);
+				isRowToCapture = false;
+			}
+		}
 	}
 
 	void removePawns(vector<Board::Field> pawns)
