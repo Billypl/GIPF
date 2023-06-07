@@ -330,8 +330,8 @@ public:
 	// white/black Piecies > 3	   
 	// | white - black | <= 3
 	// S K GW GB
-	
-	
+
+
 	/* BOARD LOADING */
 
 	void loadBoard()
@@ -342,7 +342,7 @@ public:
 		cin >> this->triggerCollectionNumber;
 		cin >> this->whitePiecesNumber;
 		cin >> this->blackPieciesNumber;
-		
+
 		cin >> this->reserveWhitePawnsNumber;
 		cin >> this->reserveBlackPawnsNumber;
 		cin >> this->currentPlayer;
@@ -383,7 +383,7 @@ public:
 			cout << finalMsg << endl;
 			return;
 		}
-		
+
 		board = newBoard;
 		cout << "BOARD_STATE_OK" << endl;
 	}
@@ -465,7 +465,7 @@ public:
 		{
 			int pawnsInRowCounter = 1;
 			char prevPawn = newBoard.board[i][rowExpansion];
-			for (int j = rowExpansion; j < newBoard.board[i].size() && newBoard.board[i][j] != '\0'; j++)
+			for (int j = rowExpansion + 1; j < newBoard.board[i].size() && newBoard.board[i][j] != '\0'; j++)
 			{
 				if (newBoard.board[i][j] == prevPawn && newBoard.board[i][j] != '_')
 				{
@@ -578,7 +578,7 @@ public:
 			return;
 		}
 
-		/* 5. IF ROW FULL? */ 
+		/* 5. IF ROW FULL? */
 		if (placePawn(direction, board[srcField], currentPlayer))
 		{
 			if (currentPlayer == 'W')
@@ -599,6 +599,7 @@ public:
 		{
 			cout << "BAD_MOVE_ROW_IS_FULL" << endl;
 		}
+		captureThePawns();
 	}
 
 	bool placePawn(Board::Move direction, Board::Field current, char player)
@@ -613,7 +614,7 @@ public:
 		{
 			return false;
 		}
-		if(placePawn(direction, next, next.value))
+		if (placePawn(direction, next, next.value))
 		{
 			next.value = player;
 			return true;
@@ -621,6 +622,96 @@ public:
 		return false;
 	}
 
+	void captureThePawns()
+	{
+		captureThePawnsRight();
+		captureThePawnsDown();
+	}
+
+	void captureThePawnsRight()
+	{
+		int rowExpansion = board.sideSize - 1;
+		for (int i = 0; i < board.getTotalRowsCount(); i++)
+		{
+			int blackPawnsNumber;
+			int whitePawnsNumber;
+			bool isRowToCapture = false;
+			vector<Board::Field> pawns;
+
+			int pawnsInRowCounter = 1;
+			char prevPawn = board.board[i][rowExpansion];
+			pawns.push_back(board[point(rowExpansion, i)]);
+			for (int j = rowExpansion + 1; j < board.board[i].size() && board.board[i][j] != '\0'; j++)
+			{
+				if (board.board[i][j] == '_')
+				{
+					if (isRowToCapture)
+					{
+						break;
+					}
+				}
+				else if (board.board[i][j] == prevPawn && board.board[i][j] != '_')
+				{
+					pawnsInRowCounter++;
+					pawns.push_back(board[point(j, i)]);
+					if (pawnsInRowCounter == triggerCollectionNumber)
+					{
+						isRowToCapture = true;
+					}
+				}
+				else if (isRowToCapture && board.board[i][j] != '_')
+				{
+					pawnsInRowCounter++;
+					pawns.push_back(board[point(j, i)]);
+				}
+				else
+				{
+					pawnsInRowCounter = 1;
+					pawns.clear();
+					pawns.push_back(board[point(i,j)]);
+				}
+				prevPawn = board.board[i][j];
+			}
+			rowExpansion = (rowExpansion > 0) ? rowExpansion - 1 : 0;
+			if (isRowToCapture)
+			{
+				removePawns(pawns);
+				isRowToCapture = false;
+				break;
+			}
+		}
+		
+	}
+
+
+	void captureThePawnsDown()
+	{
+		board.board = Helper::transposeMatrix(board.board);
+		captureThePawnsRight();
+		board.board = Helper::transposeMatrix(board.board);
+	}
+
+	void removePawns(vector<Board::Field> pawns)
+	{
+		vector<char> tmp;
+		for (auto& it : pawns)
+		{
+			tmp.push_back(it.value);
+			it.value = '_';
+		}
+
+		map<char, int> m = Helper::countDuplicates(tmp);
+		int w = m['W'];
+		int b = m['B'];
+		if (w < b)
+		{
+			reserveBlackPawnsNumber += b;
+		}
+		else
+		{
+			reserveWhitePawnsNumber += w;
+		}
+	}
 
 	/* OTHER */
 
@@ -647,27 +738,6 @@ public:
 
 };
 
-
-
-
-void boardTest()
-{
-	Board board(2);
-
-	board["c3"].value = 'X';
-
-	cout << board[board["c3"].coords].value << endl;
-	//board["c4"].value = 'Z';
-	//board["b2"].value = '2';
-	//board["b3"].value = '3';
-	//board["b4"].value = '4';
-	board.getNeighbour("c3", Board::Move::UPPER_RIGHT).print();
-	cout << endl;
-	board.printBoard();
-}
-
-
-
 int main()
 {
 	Game game;
@@ -693,6 +763,5 @@ int main()
 		}
 		command.clear();
 	}
-	//boardTest();
 
 }

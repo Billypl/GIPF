@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <sstream>
+#include <map>
 #define WHITESPACE " \n\r\t\f\v"
 
 namespace std
@@ -69,5 +70,20 @@ public:
 
         return transposed;
     }
+
+    static std::map<char, int> countDuplicates(std::vector<char> vec)
+    {
+        std::map<char, int> duplicate;
+        sort(begin(vec), end(vec));
+
+        auto beg = begin(vec) + 1;
+        for (auto it : vec)
+        {
+            duplicate[it]++;
+        }
+        return duplicate;
+    }
+
+
 
 };
